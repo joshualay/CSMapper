@@ -151,7 +151,10 @@ static NSString * const CSMappingDefaultKey = @"default";
 			}
 			
 			outputValue = inputValue;
-			if (forcedClass && ![inputValue isKindOfClass:forcedClass]) {
+			if ([outputValue isKindOfClass:[NSNull class]] && [key isKindOfClass:[NSString class]]) {
+                outputValue = @"";
+
+            } else if (forcedClass && ![inputValue isKindOfClass:forcedClass]) {
 				selector = NSSelectorFromString([NSString stringWithFormat:@"%@Value", forcedClass]);
 				if ([inputValue respondsToSelector:selector]) {
 					// Try to use the built in conversion features for known types
