@@ -245,9 +245,12 @@ static NSMutableDictionary *mappingCache = NULL;
  */
 - (NSNumber *)NSNumberValue {
 	if ([self isKindOfClass:[NSString class]]) {
-		NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
-		[f setNumberStyle:NSNumberFormatterDecimalStyle];
-		NSNumber *retval = [f numberFromString:(NSString *)self];
+        NSScanner* scanner = [NSScanner scannerWithString:(NSString *)self];
+        double doubleValue;
+        NSNumber *retval = nil;
+        if ([scanner scanDouble:&doubleValue]) {
+            retval = [NSNumber numberWithDouble:doubleValue];
+        }
 		
 		return retval;
 	} else if ([self isKindOfClass:[NSNumber class]]) {
